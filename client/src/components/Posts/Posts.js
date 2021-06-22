@@ -1,9 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import Post from "./Post/Post.js";
 import useStyles from "./styles";
 
 const Posts = () => {
+  // access posts from the reducers directory index.js combineReducers call
+  const posts = useSelector((state) => state.posts);
   const classes = useStyles();
+
+  console.log(posts);
   return (
     <>
       <h1> Posts </h1>

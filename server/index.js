@@ -8,15 +8,15 @@ import postRoutes from "./routes/posts.js";
 // initialize express application
 const app = express();
 
-// express middleware to connect postRoutes to application
-app.use("/posts", postRoutes);
-
 // body-parser set up
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-// initiliaze CORS
+// initiliaze CORS before using the routes
 app.use(cors());
+
+// express middleware to connect postRoutes to application
+app.use("/posts", postRoutes);
 
 // connect server with Mongo Database
 const CONNECTION_URL =
