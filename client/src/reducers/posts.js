@@ -4,7 +4,8 @@ export default (posts = [], action) => {
     case "FETCH_ALL":
       return action.payload;
     case "CREATE":
-      return posts;
+      // spread posts and add new post from the action payload
+      return [...posts, action.payload];
 
     default:
       return posts;
