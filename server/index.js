@@ -2,11 +2,15 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
 // import routes
 import postRoutes from "./routes/posts.js";
 
 // initialize express application
 const app = express();
+
+// configuring the ability to read local environment variables
+dotenv.config();
 
 // body-parser set up
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -19,13 +23,11 @@ app.use(cors());
 app.use("/posts", postRoutes);
 
 // connect server with Mongo Database
-const CONNECTION_URL =
-  "mongodb+srv://mattyricks:mattyricks123@cluster0.o7fa8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 // connect mongoose to mongo and server
 mongoose
-  .connect(CONNECTION_URL, {
+  .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
