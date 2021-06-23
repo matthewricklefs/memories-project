@@ -9,7 +9,7 @@ import Form from "../Form/Form";
 
 const Home = () => {
   const [currentId, setCurrentId] = useState(null);
-  const classes = useStyles();
+  // const classes = useStyles();
   const dispatch = useDispatch();
 
   // implements useDispatch to call our getPosts action.
@@ -20,7 +20,7 @@ const Home = () => {
     <Grow in>
       <Container>
         <Grid
-          className={classes.mainContainer}
+          // className={classes.mainContainer}
           container
           justify="space-between"
           alignItems="stretch"

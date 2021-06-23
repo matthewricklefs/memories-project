@@ -29,9 +29,7 @@ const Navbar = () => {
           height="60"
         />
       </div>
-      <Toolbar>
-        {" "}
-        className={classes.toolbar}
+      <Toolbar className={classes.toolbar}>
         {user ? (
           <div className={classes.profile}>
             <Avatar
