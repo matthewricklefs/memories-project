@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import useStyles from "./styles";
-import { createPost } from "../../actions/posts";
+import { createPost, updatePost } from "../../actions/posts";
 
-const Form = () => {
+// GET THE CURRENT ID OF THE POST WE ARE ON
+
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -13,19 +16,44 @@ const Form = () => {
     tags: "",
     selectedFile: "",
   });
+  // finding the selected post and selecting it's by id to be displayed inside of the Form component
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
   const classes = useStyles();
   // dispatch actions
   const dispatch = useDispatch();
 
+  // populate values of the form
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
+
   // form Handler function
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch action for creating posts
-    dispatch(createPost(postData));
+
+    if (currentId) {
+      // dispatcy action for updating a post if we have a currentId selected
+      dispatch(updatePost(currentId, postData));
+    } else {
+      // dispatch action for creating posts
+      dispatch(createPost(postData));
+    }
+    clear();
   };
 
   // clear form handler
-  const clear = () => {};
+  const clear = () => {
+    setCurrentId(null);
+    setPostData({
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -35,7 +63,9 @@ const Form = () => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Creating a Memory</Typography>
+        <Typography variant="h6">
+          {currentId ? "Editing" : "Creating"} a Memory
+        </Typography>
         <TextField
           name="creator"
           variant="outlined"
@@ -70,7 +100,9 @@ const Form = () => {
           label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) =>
+            setPostData({ ...postData, tags: e.target.value.split(",") })
+          }
         />
         <div className={classes.fileInput}>
           <FileBase
