@@ -22,6 +22,10 @@ app.use(cors());
 // express middleware to connect postRoutes to application
 app.use("/posts", postRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Hello to memories API");
+});
+
 // connect server with Mongo Database
 const PORT = process.env.PORT;
 
