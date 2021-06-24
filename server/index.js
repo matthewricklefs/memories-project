@@ -5,6 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 // import routes
 import postRoutes from "./routes/posts.js";
+import userRoutes from "./routes/users.js";
 
 // initialize express application
 const app = express();
@@ -21,6 +22,7 @@ app.use(cors());
 
 // express middleware to connect postRoutes to application
 app.use("/posts", postRoutes);
+app.use("/user", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello to memories API");

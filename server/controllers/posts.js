@@ -4,8 +4,6 @@ import PostMessage from "../models/postMessage.js";
 // helpful status message information:
 // https://www.restapitutorial.com/httpstatuscodes.html
 
-
-
 export const getPosts = async (req, res) => {
   try {
     const postMessages = await PostMessage.find();
